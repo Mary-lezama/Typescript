@@ -39,3 +39,11 @@ console.log(`Vivo en la calle ${miDireccion.calle} de la ciudad ${miDireccion.ci
 type Resultado = "exito" |"error"
 type idUsuario = string | number
 
+//usamos ambos alias 
+
+let estadoOperacion: Resultado = "error"
+let idUsuario: idUsuario = 45 
+let idUsuario1: idUsuario = "soy letra"
+
+console.log(`Estado de operacion ${estadoOperacion}, usuario id: ${idUsuario}`);
+
