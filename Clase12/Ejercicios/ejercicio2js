@@ -1,0 +1,59 @@
+/*Ejercicio 2: Crear un Endpoint POST para agregar usuarios 
+Consigna: Ahora vamos a permitir que el cliente agregue nuevos usuarios a la 
+lista. Tu tarea es crear un endpoint POST que reciba los datos del usuario desde 
+el cuerpo de la solicitud en formato JSON. Los datos deben incluir name y email. 
+Si alguno de estos datos falta, el servidor debe responder con un error (código 
+400). 
+Recuerda usar express.json() como middleware para procesar los datos del 
+cuerpo de la solicitud.*/
+
+const express = require('express');
+
+const app = express();
+
+app.use(express.json());
+
+const PORT= 3000
+
+const usuarios = [
+    {name: 'fer' , email: 'fer@gmail.com'},
+    {name: 'bel' , email: 'bel@gmail.com'}
+]
+
+//RUTA RAIZ
+app.get('/', (req, res) => {
+    res.send(`Bienvenido a la API usuarios`)
+});
+
+
+//ruta donde muestra la lista
+app.get('/usuarios', (req, res) => {
+    res.json(usuarios)
+});
+
+
+// ruta post para agregar usuarios
+app.post('/usuarios', (req,res) => {
+    const { name, email } = req.body;
+
+
+//Validacion
+
+  if (!name || !email) {
+    return res.status(400).json({ error: 'Faltan datos: name y email son obligatorios.' });
+  }
+
+
+const nuevoUsuario = { name, email };
+usuarios.push(nuevoUsuario)
+
+res.status(201).json({
+    mensaje: 'Usuario agregado',
+    usuario: nuevoUsuario
+});
+
+});
+
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`)
+})
